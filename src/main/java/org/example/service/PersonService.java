@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.example.model.Person;
-import org.springframework.stereotype.Service;
 
 public interface PersonService {
     
