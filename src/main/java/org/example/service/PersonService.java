@@ -1,11 +1,19 @@
 package org.example.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.example.model.Person;
 import org.springframework.stereotype.Service;
 
-@Service
-public class PersonService {
+public interface PersonService {
     
-    public String sayHello() {
-        return "Hello from Spring";
-    }
+    List<Person> findAll();
+
+    Optional<Person> findById(Long id);
+
+    Person create(Person person);
+
+    boolean deleteById(Long id);
+
 }
