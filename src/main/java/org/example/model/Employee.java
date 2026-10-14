@@ -2,19 +2,41 @@ package org.example.model;
 
 import java.util.UUID;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Employee")
 public class Employee {
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private UUID employeeNumber;
+
+    @Column( nullable = false)
+    private Long employeeNumber;
+
+    @Column( nullable = false)
     private String firstName;
+
+    @Column( nullable = false)
     private String lastName;
+
+    @Column( nullable = false)
     private String jobTitle;
+
+    @Column( nullable = false)
     private ContractType contract;
 
     public Employee(){
 
     }
 
-    public Employee(long id, UUID employeeNumber, String firstName, String lastName, String jobTitle, ContractType contract) {
+    public Employee(long id, Long employeeNumber, String firstName, String lastName, String jobTitle, ContractType contract) {
         this.id = id;
         this.employeeNumber = employeeNumber;
         this.firstName = firstName;
@@ -37,11 +59,11 @@ public class Employee {
         this.id = id;
     }
 
-    public UUID getEmployeeNumber() {
+    public Long getEmployeeNumber() {
         return employeeNumber;
     }
 
-    public void setEmployeeNumber(UUID employeeNumber) {
+    public void setEmployeeNumber(Long employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
 
