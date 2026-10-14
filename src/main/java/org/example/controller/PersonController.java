@@ -26,7 +26,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(
-            @PathVariable Long id) {
+            @PathVariable("id") Long id) {
 
         return service.findById(id)
                 .map(ResponseEntity::ok)
