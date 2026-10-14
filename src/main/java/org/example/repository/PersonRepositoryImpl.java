@@ -5,38 +5,46 @@ import java.util.List;
 import java.util.Optional;
 
 import org.example.model.*;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PersonRepositoryImpl implements PersonRepository{
+    
     private final List<Person> users = new ArrayList<>();
-    private int nextId;
+    private static long nextId = 1;
 
     @Override
-    public synchronized List<Person> findAll() {
-        return new ArrayList<>(users);
+    public List<Person> findAll() {
+        
+        return users;
     }
 
     @Override
-    public synchronized Optional<Person> findById(Long id) {
+    public Optional<Person> findById(Long id) {
+
         return users.stream()
-                .filter(person -> person.getId().equals(id))
+                .filter(person -> person.getId() == id)
                 .findFirst();
     }
 
     @Override
-    public synchronized Person save(Person person) {
-        person.setId(nextId.getAndIncrement());
+    public Person save(Person person) {
+
+        person.setId(nextId++);
         users.add(person);
         return person;
     }
 
     @Override
-    public synchronized boolean deleteById(Long id) {
+    public boolean deleteById(Long id) {
+
         return users.removeIf(person ->
-                person.getId().equals(id));
+                person.getId() == id);
     }
 
     @Override
-    public synchronized boolean existsByEmail(String email) {
+    public boolean existsByEmail(String email) {
+
         return users.stream()
                 .anyMatch(person ->
                         person.getEmail().equalsIgnoreCase(email));
