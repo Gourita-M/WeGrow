@@ -6,9 +6,8 @@ import java.util.Optional;
 import org.example.model.Person;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public interface PersonRepository {
-    
+
     List<Person> findAll();
 
     Optional<Person> findById(Long id);
