@@ -48,7 +48,7 @@ public class Employee {
     public enum ContractType{
         CDI,
         CDD,
-        InternShip
+        INTERNSHIP
     }
 
     public long getId() {
