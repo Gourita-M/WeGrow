@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.example.model.Person;
 import org.example.service.PersonService;
 import org.springframework.http.HttpStatus;
@@ -13,22 +12,22 @@ import java.util.List;
 @RequestMapping("/api/persons")
 public class PersonController {
 
-    private final PersonService service;
+    private final PersonService personService;
 
     public PersonController(PersonService service) {
-        this.service = service;
+        this.personService = service;
     }
 
     @GetMapping
     public ResponseEntity<List<Person>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+        return ResponseEntity.ok(personService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(
             @PathVariable("id") Long id) {
 
-        return service.findById(id)
+        return personService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() ->
                         ResponseEntity.notFound().build());
@@ -39,7 +38,7 @@ public class PersonController {
             @RequestBody Person person) {
 
         try {
-            Person created = service.create(person);
+            Person created = personService.create(person);
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -56,7 +55,7 @@ public class PersonController {
     public ResponseEntity<Void> delete(
             @PathVariable("id") Long id) {
 
-        if (service.deleteById(id)) {
+        if (personService.deleteById(id)) {
             return ResponseEntity.noContent().build();
         }
 
