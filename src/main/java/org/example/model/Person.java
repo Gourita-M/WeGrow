@@ -5,11 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Person")
 public class Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +26,9 @@ public class Person {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "person")
+    private List<Department> departements = new ArrayList<>();
 
     public Person(){
 
