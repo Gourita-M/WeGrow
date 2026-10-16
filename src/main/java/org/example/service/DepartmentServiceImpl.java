@@ -3,9 +3,12 @@ package org.example.service;
 import org.example.model.Department;
 import org.example.repository.DepartmentRepository;
 import org.example.repository.DepartmentRepositoryImpl;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DepartmentServiceImpl implements DepartmentService{
     private final DepartmentRepository departmentRepository;
 
@@ -14,8 +17,8 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
     
     @Override 
-    public Department save(Department departement){
-        return departmentRepository.save(departement);
+    public Department save(Department departement, Long userId){
+        return departmentRepository.save(departement, userId);
     }
 
     @Override 
