@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Departement")
+@Table(name = "Department")
 public class Department {
 
     @Id
@@ -27,17 +27,16 @@ public class Department {
     private long employeeCount;
 
     @ManyToOne
-    @JoinColumn(name = "") //i'll get it when i create the table
+    @JoinColumn(name = "person_id")
     private Person person;
 
     public Department(){
 
     }
 
-    public Department(String name, String description, long employeeCount) {
+    public Department(String name, String description) {
         this.name = name;
         this.description = description;
-        this.employeeCount = employeeCount;
     }
 
     public long getId() {
@@ -80,5 +79,13 @@ public class Department {
                 ", description='" + description + '\'' +
                 ", employeeCount=" + employeeCount +
                 '}';
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }
