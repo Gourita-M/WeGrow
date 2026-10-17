@@ -72,6 +72,21 @@ public class Person {
         this.password = password;
     }
 
+    public List<Department> getDepartements() {
+        return departements;
+    }
+
+    public void setDepartements(List<Department> departements) {
+        this.departements = departements;
+    }
+
+    public void addDepartment(Department department) {
+        if (department != null && !departements.contains(department)) {
+            departements.add(department);
+        }
+        department.setPerson(this);
+    }
+
     @Override
     public String toString() {
         return "Person{" +
