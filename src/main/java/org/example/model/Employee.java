@@ -2,13 +2,7 @@ package org.example.model;
 
 import java.util.UUID;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Employee")
@@ -31,6 +25,10 @@ public class Employee {
 
     @Column( nullable = false)
     private ContractType contract;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     public Employee(){
 
@@ -97,6 +95,22 @@ public class Employee {
 
     public void setContract(ContractType contract) {
         this.contract = contract;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        if (this.department != null && this.department != department) {
+            this.department.getEmployees().remove(this);
+        }
+
+        this.department = department;
+
+        if (department != null && !department.getEmployees().contains(this)) {
+            department.getEmployees().add(this);
+        }
     }
 
     @Override
