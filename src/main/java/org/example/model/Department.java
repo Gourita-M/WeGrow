@@ -1,13 +1,9 @@
 package org.example.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Department")
@@ -29,6 +25,9 @@ public class Department {
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
+
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employees = new ArrayList<>();
 
     public Department(){
 
@@ -71,6 +70,19 @@ public class Department {
         this.employeeCount = employeeCount;
     }
 
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+        employee.setDepartment(this);
+    }
+
     @Override
     public String toString() {
         return "Departement{" +
@@ -86,6 +98,14 @@ public class Department {
     }
 
     public void setPerson(Person person) {
+        if (this.person != null && this.person != person) {
+            this.person.getDepartements().remove(this);
+        }
+
         this.person = person;
+
+        if (person != null && !person.getDepartements().contains(this)) {
+            person.getDepartements().add(this);
+        }
     }
 }
