@@ -6,6 +6,6 @@ import java.util.List;
 public interface EmployeeRepository {
     
     List<Employee> getAll();
-    Employee create(Employee employee);
+    Employee create(Employee employee, Long departmentId);
     Employee getById(Long id);
 }
