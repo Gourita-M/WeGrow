@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.database.Database;
+import org.example.model.Department;
 import org.example.model.Employee;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,25 +12,26 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     
     public List<Employee> getAll(){
         EntityManager em = Database.jpa();
-        try{
-            em.getTransaction().begin();
-            List<Employee> employee = new ArrayList<>();
-            return employee;
-            
-        }catch(Exception e){
-            if(em.getTransaction().isActive()){
-                em.getTransaction().rollback();
-            }
-            throw e;
-        }finally{
-            em.close();
-        }
+
+        List<Employee> employees = em
+                .createQuery(
+                        "SELECT e FROM Employee e",
+                        Employee.class
+                )
+                .getResultList();
+
+        return employees;
     }
 
-    public Employee create(Employee employee){
+    public Employee create(Employee employee, Long departmentId){
         EntityManager em = Database.jpa();
+        Department department = em.find(Department.class, departmentId);
+
         try{
             em.getTransaction().begin();
+            if (department != null) {
+                employee.setDepartment(department);
+            }
             em.persist(employee);
             em.getTransaction().commit();
 
